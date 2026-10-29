@@ -224,22 +224,22 @@ impl Tokens {
             // Sampled from Photoshop 2026's default brightness (raw display values).
             ThemeKind::ProMedium => Tokens {
                 kind,
-                chrome: Color32::from_rgb(83, 83, 83),
-                dock: Color32::from_rgb(66, 66, 66),
-                card: Color32::from_rgb(83, 83, 83),
-                card_border: Color32::from_rgb(66, 66, 66),
-                field: Color32::from_rgb(69, 69, 69),
-                field_border: Color32::from_rgb(104, 104, 104),
-                hover: Color32::from_rgb(98, 98, 98),
-                pressed: Color32::from_rgb(112, 112, 112),
+                chrome: Color32::from_rgb(13, 18, 21),
+                dock: Color32::from_rgb(9, 11, 13),
+                card: Color32::from_rgb(13, 18, 21),
+                card_border: Color32::from_rgb(35, 48, 52),
+                field: Color32::from_rgb(23, 33, 37),
+                field_border: Color32::from_rgb(46, 65, 69),
+                hover: Color32::from_rgb(29, 47, 49),
+                pressed: Color32::from_rgb(35, 61, 61),
                 text: Color32::from_rgb(238, 238, 238),
                 text_dim: Color32::from_rgb(212, 212, 212),
                 text_faint: Color32::from_rgb(160, 160, 160),
                 icon: Color32::from_rgb(226, 226, 226),
-                accent_soft: Color32::from_rgb(110, 110, 110),
-                separator: Color32::from_rgb(62, 62, 62),
-                tab_strip: Color32::from_rgb(74, 74, 74),
-                row_selected: Color32::from_rgb(107, 107, 107),
+                accent_soft: Color32::from_rgb(25, 67, 63),
+                separator: Color32::from_rgb(35, 48, 52),
+                tab_strip: Color32::from_rgb(9, 15, 17),
+                row_selected: Color32::from_rgb(25, 67, 63),
                 ..Tokens::for_kind(ThemeKind::Pro)
             },
             // Photoshop's medium-light brightness: #B8B8B8 panels, dark text, a mid-grey canvas.
@@ -294,27 +294,27 @@ impl Tokens {
             },
             ThemeKind::Pro => Tokens {
                 kind,
-                chrome: Color32::from_rgb(50, 50, 50),
-                canvas: Color32::from_rgb(40, 40, 40),
-                canvas_dot: Color32::from_rgb(40, 40, 40),
-                dock: Color32::from_rgb(30, 30, 30),
-                card: Color32::from_rgb(50, 50, 50),
-                card_border: Color32::from_rgb(30, 30, 30),
-                field: Color32::from_rgb(36, 36, 36),
-                field_border: Color32::from_rgb(74, 74, 74),
-                hover: Color32::from_rgb(66, 66, 66),
-                pressed: Color32::from_rgb(78, 78, 78),
+                chrome: Color32::from_rgb(13, 18, 21),
+                canvas: Color32::from_rgb(9, 11, 13),
+                canvas_dot: Color32::from_rgb(23, 33, 37),
+                dock: Color32::from_rgb(9, 11, 13),
+                card: Color32::from_rgb(13, 18, 21),
+                card_border: Color32::from_rgb(35, 48, 52),
+                field: Color32::from_rgb(23, 33, 37),
+                field_border: Color32::from_rgb(46, 65, 69),
+                hover: Color32::from_rgb(29, 47, 49),
+                pressed: Color32::from_rgb(35, 61, 61),
                 text: Color32::from_rgb(222, 222, 222),
                 text_dim: Color32::from_rgb(178, 178, 178),
                 text_faint: Color32::from_rgb(128, 128, 128),
                 icon: Color32::from_rgb(200, 200, 200),
-                accent: Color32::from_rgb(55, 142, 240),
-                accent_soft: Color32::from_rgb(78, 78, 78),
-                accent_border: Color32::from_rgb(55, 142, 240),
+                accent: Color32::from_rgb(0, 155, 132),
+                accent_soft: Color32::from_rgb(25, 67, 63),
+                accent_border: Color32::from_rgb(37, 214, 183),
                 accent_text: Color32::WHITE,
-                separator: Color32::from_rgb(30, 30, 30),
+                separator: Color32::from_rgb(35, 48, 52),
                 shadow: Color32::from_black_alpha(150),
-                primary_bg: Color32::from_rgb(55, 142, 240),
+                primary_bg: Color32::from_rgb(0, 129, 111),
                 primary_text: Color32::WHITE,
                 danger: Color32::from_rgb(236, 91, 98),
                 warning: Color32::from_rgb(232, 176, 70),
@@ -324,8 +324,8 @@ impl Tokens {
                 bevel: false,
                 pro: true,
                 round_chips: false,
-                tab_strip: Color32::from_rgb(38, 38, 38),
-                row_selected: Color32::from_rgb(82, 82, 82),
+                tab_strip: Color32::from_rgb(9, 15, 17),
+                row_selected: Color32::from_rgb(25, 67, 63),
                 histogram_bg: Color32::from_rgb(40, 40, 40),
                 histogram_level: 225,
                 caption_close: Color32::from_rgb(196, 43, 28),
@@ -1390,5 +1390,17 @@ pub mod live {
             assert_eq!(t.radius, 9.0);
             assert_eq!(unknown, vec!["nope".to_string()]);
         }
+    }
+}
+
+#[cfg(test)]
+mod visualab_brand_tests {
+    use super::*;
+    #[test]
+    fn default_brand_has_readable_text_and_turquoise_actions() {
+        let t = Tokens::for_kind(ThemeKind::default());
+        assert_eq!(t.primary_bg, Color32::from_rgb(0, 129, 111));
+        assert!(t.text.r() > 200 && t.chrome.r() < 30);
+        assert_ne!(t.danger, t.accent);
     }
 }

@@ -65,7 +65,7 @@ pub(crate) struct LaunchArgs {
 
 /// The variables that aren't a flag's fallback, for the end of `--help`.
 const ENVIRONMENT: &str = "\
-Environment: PHOTOCRAFT_NEW_INSTANCE (anything but 0 or empty: as --new-instance), PHOTOCRAFT_CONFIG_DIR (the settings folder)";
+Environment: PHOTOCRAFT_NEW_INSTANCE (anything but 0 or empty: as --new-instance), VISUALAB_PHOTO_CONFIG_DIR (the settings folder)";
 
 /// An option that applies only to the process it's given to: a launch with any of them keeps its
 /// own process instead of handing its files to the running one (`single_instance`). Shown as the

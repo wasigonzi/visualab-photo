@@ -41,7 +41,7 @@ fn run_with(args: &[&str], vars: &[(&str, &str)]) -> Run {
     let output = cmd
         .args(args)
         .envs(vars.iter().copied())
-        .env("PHOTOCRAFT_CONFIG_DIR", &dir)
+        .env("VISUALAB_PHOTO_CONFIG_DIR", &dir)
         .env_remove("DISPLAY")
         .env_remove("WAYLAND_DISPLAY")
         .env_remove("WAYLAND_SOCKET")

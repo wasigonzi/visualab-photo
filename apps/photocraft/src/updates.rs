@@ -22,6 +22,10 @@ pub fn service() -> CheckFn {
 
 fn check() -> CheckResult {
     let http = craft_update::Http::new("PhotoCraft/Update")?;
-    let found = craft_update::check_for_update(&craft_update::suite::PHOTOCRAFT, &http, photocraft_engine::build_info::VERSION)?;
+    let found = craft_update::check_for_update(
+        &craft_update::App::new("visualab-photo", "Visualab Photo", "Visualab Studios creative tools", "wasigonzi/visualab-photo"),
+        &http,
+        photocraft_engine::build_info::VERSION,
+    )?;
     Ok(found.map(|release| Release { version: release.tag.trim_start_matches(['v', 'V']).to_string(), url: release.html_url }))
 }
