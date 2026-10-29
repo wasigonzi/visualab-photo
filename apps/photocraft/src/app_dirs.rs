@@ -2,12 +2,12 @@
 //! autosaves and the GPU startup marker all live under the one directory [`config_dir`] returns.
 //!
 //! In order:
-//! 1. `PHOTOCRAFT_CONFIG_DIR`, when set (tests, agents, custom setups).
+//! 1. `VISUALAB_PHOTO_CONFIG_DIR`, when set (tests, agents, custom setups).
 //! 2. **Portable mode** (#228): a marker file ([`PORTABLE_MARKERS`]) beside the executable puts
-//!    everything in `<exe dir>/PhotoCraftData`, so a portable copy on a USB stick leaves nothing in
+//!    everything in `<exe dir>/VisualabPhotoData`, so a portable copy on a USB stick leaves nothing in
 //!    `%APPDATA%`. The Windows portable zip ships with `portable.txt`; the MSI doesn't. If that
 //!    folder can't be written (read-only medium, Program Files), the app warns and falls back.
-//! 3. The platform convention: macOS `~/Library/Application Support/Photocraft`, Windows
+//! 3. The platform convention: macOS `~/Library/Application Support/VisualabPhoto`, Windows
 //!    `%APPDATA%\Photocraft`, Linux `$XDG_CONFIG_HOME/photocraft` or `~/.config/photocraft`.
 //!
 //! One exception: the platform convention keeps crash-recovery autosaves out of what is synced
@@ -20,14 +20,14 @@ use std::sync::OnceLock;
 /// Files beside the executable that switch on portable mode (either one; contents are ignored).
 pub const PORTABLE_MARKERS: [&str; 2] = ["portable.txt", "PhotoCraft.portable"];
 /// The data folder created beside the executable in portable mode.
-pub const PORTABLE_DATA_DIR: &str = "PhotoCraftData";
+pub const PORTABLE_DATA_DIR: &str = "VisualabPhotoData";
 
 /// How [`DataDir::dir`] was chosen.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Mode {
-    /// `PHOTOCRAFT_CONFIG_DIR`.
+    /// `VISUALAB_PHOTO_CONFIG_DIR`.
     Override,
-    /// `<exe dir>/PhotoCraftData`.
+    /// `<exe dir>/VisualabPhotoData`.
     Portable,
     /// The platform's per-user config directory.
     Platform,
@@ -85,7 +85,7 @@ pub fn recovery_dir() -> Option<PathBuf> {
 ///   `~/.local/state/photocraft/Recovery`, where the XDG Base Directory spec puts state that
 ///   should outlive a restart but isn't configuration; dotfile managers and config sync often copy
 ///   `~/.config` whole. As the spec asks, a relative `XDG_STATE_HOME` is ignored.
-/// - macOS: `~/Library/Application Support/Photocraft/Recovery` as before. Apple's guidelines put
+/// - macOS: `~/Library/Application Support/VisualabPhoto/Recovery` as before. Apple's guidelines put
 ///   app-created data that can't be regenerated there; `~/Library/Caches` may be purged by the
 ///   system.
 ///
@@ -95,7 +95,7 @@ pub fn resolve_recovery(data: &DataDir, env: impl Fn(&str) -> Option<OsString>) 
     if data.mode == Mode::Platform {
         if cfg!(windows) {
             if let Some(local) = env("LOCALAPPDATA").filter(|l| !l.is_empty()) {
-                return Some(PathBuf::from(local).join("Photocraft").join(RECOVERY));
+                return Some(PathBuf::from(local).join("VisualabPhoto").join(RECOVERY));
             }
         } else if !cfg!(target_os = "macos") {
             let state = env("XDG_STATE_HOME")
@@ -103,7 +103,7 @@ pub fn resolve_recovery(data: &DataDir, env: impl Fn(&str) -> Option<OsString>) 
                 .filter(|s| s.is_absolute())
                 .or_else(|| env("HOME").filter(|h| !h.is_empty()).map(|h| PathBuf::from(h).join(".local").join("state")));
             if let Some(state) = state {
-                return Some(state.join("photocraft").join(RECOVERY));
+                return Some(state.join("visualab-photo").join(RECOVERY));
             }
         }
     }
@@ -455,7 +455,7 @@ fn copy_file(from: &Path, to: &Path) -> std::io::Result<()> {
 
 /// Resolve the data directory from the environment (`env`) and the executable's folder.
 pub fn resolve(env: impl Fn(&str) -> Option<OsString>, exe_dir: Option<&Path>) -> DataDir {
-    if let Some(d) = env("PHOTOCRAFT_CONFIG_DIR").filter(|d| !d.is_empty()) {
+    if let Some(d) = env("VISUALAB_PHOTO_CONFIG_DIR").filter(|d| !d.is_empty()) {
         return DataDir { dir: Some(PathBuf::from(d)), mode: Mode::Override, warning: None };
     }
     let platform = platform_dir(&env);
@@ -478,12 +478,12 @@ pub fn resolve(env: impl Fn(&str) -> Option<OsString>, exe_dir: Option<&Path>) -
 pub fn platform_dir(env: &impl Fn(&str) -> Option<OsString>) -> Option<PathBuf> {
     let home = env("HOME").filter(|h| !h.is_empty()).map(PathBuf::from);
     if cfg!(target_os = "macos") {
-        return home.map(|h| h.join("Library/Application Support/Photocraft"));
+        return home.map(|h| h.join("Library/Application Support/VisualabPhoto"));
     }
     if cfg!(windows) {
-        return env("APPDATA").filter(|a| !a.is_empty()).map(|a| PathBuf::from(a).join("Photocraft"));
+        return env("APPDATA").filter(|a| !a.is_empty()).map(|a| PathBuf::from(a).join("VisualabPhoto"));
     }
-    env("XDG_CONFIG_HOME").filter(|x| !x.is_empty()).map(PathBuf::from).or_else(|| home.map(|h| h.join(".config"))).map(|c| c.join("photocraft"))
+    env("XDG_CONFIG_HOME").filter(|x| !x.is_empty()).map(PathBuf::from).or_else(|| home.map(|h| h.join(".config"))).map(|c| c.join("visualab-photo"))
 }
 
 /// The first portable marker file in `exe_dir`, if any.

@@ -18,7 +18,7 @@
 //! files and frees the lock.
 //!
 //! Only for the per-user settings folder ([`skip_reason`]): a portable copy's folder beside the
-//! executable, or a `PHOTOCRAFT_CONFIG_DIR`, may be shared between users.
+//! executable, or a `VISUALAB_PHOTO_CONFIG_DIR`, may be shared between users.
 //! macOS doesn't need this: LaunchServices already sends a running app an open-documents event.
 
 // Only the tests use it on macOS.
@@ -184,7 +184,7 @@ fn env_launch_options_from(get: impl Fn(&str) -> Option<std::ffi::OsString>) -> 
 /// Why this launch runs as its own instance, or `None` to take part in single-instance.
 pub fn skip_reason(c: &LaunchContext) -> Option<String> {
     if !c.per_user_settings {
-        return Some("the settings folder isn't the per-user one (portable or PHOTOCRAFT_CONFIG_DIR)".into());
+        return Some("the settings folder isn't the per-user one (portable or VISUALAB_PHOTO_CONFIG_DIR)".into());
     }
     if c.new_instance_flag || c.new_instance_env.is_some_and(|v| !v.is_empty() && v != "0") {
         return Some("--new-instance".into());

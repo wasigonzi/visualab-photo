@@ -30,7 +30,7 @@ fn run_with(args: &[&str], vars: &[(&str, &str)]) -> Run {
     std::fs::create_dir_all(&dir).unwrap();
     let output = std::process::Command::new(crate::binary())
         .args(args)
-        .env("PHOTOCRAFT_CONFIG_DIR", &dir)
+        .env("VISUALAB_PHOTO_CONFIG_DIR", &dir)
         // Isolate from the host environment so the test is reproducible.
         .env_remove("PHOTOCRAFT_CONTROL_PORT")
         .env_remove("PHOTOCRAFT_CONTROL_TOKEN")

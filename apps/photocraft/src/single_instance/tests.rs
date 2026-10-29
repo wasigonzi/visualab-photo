@@ -248,7 +248,7 @@ fn only_per_user_launches_without_process_options_take_part() {
         launch_options: &[],
     };
     assert_eq!(skip_reason(&base), None);
-    // A portable copy's folder or a PHOTOCRAFT_CONFIG_DIR may be shared between users.
+    // A portable copy's folder or a VISUALAB_PHOTO_CONFIG_DIR may be shared between users.
     assert!(skip_reason(&LaunchContext { per_user_settings: false, ..base }).is_some());
     assert!(skip_reason(&LaunchContext { new_instance_flag: true, ..base }).is_some());
     assert!(skip_reason(&LaunchContext { new_instance_env: Some("1"), ..base }).is_some());
@@ -327,8 +327,8 @@ fn a_crashed_primary_s_socket_file_does_not_block_the_next_one() {
 #[test]
 fn the_socket_transport_needs_a_flatpak_id_and_a_runtime_directory() {
     use std::ffi::OsStr;
-    let (id, run) = (OsStr::new("ai.storyteller.photocraft"), OsStr::new("/run/user/1000"));
-    assert_eq!(sandbox_socket(Some(id), Some(run)), Some(PathBuf::from("/run/user/1000/app/ai.storyteller.photocraft/instance.sock")));
+    let (id, run) = (OsStr::new("com.visualabstudios.photo"), OsStr::new("/run/user/1000"));
+    assert_eq!(sandbox_socket(Some(id), Some(run)), Some(PathBuf::from("/run/user/1000/app/com.visualabstudios.photo/instance.sock")));
     assert_eq!(sandbox_socket(None, Some(run)), None);
     assert_eq!(sandbox_socket(Some(id), None), None);
     assert_eq!(sandbox_socket(Some(OsStr::new("")), Some(run)), None);

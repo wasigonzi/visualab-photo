@@ -19,7 +19,10 @@ impl Default for Runtime {
             startup_checked: false,
             notified_version: None,
             #[cfg(not(target_arch = "wasm32"))]
-            updater: craft_update::updater::Updater::new(&craft_update::suite::PHOTOCRAFT, photocraft_engine::build_info::VERSION),
+            updater: craft_update::updater::Updater::new(
+                &craft_update::App::new("visualab-photo", "Visualab Photo", "Visualab Studios creative tools", "wasigonzi/visualab-photo"),
+                photocraft_engine::build_info::VERSION,
+            ),
         }
     }
 }
