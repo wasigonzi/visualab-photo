@@ -41,7 +41,7 @@ fn no_marker_uses_the_platform_dir() {
     } else if cfg!(windows) {
         assert_eq!(dir, root.join("appdata").join("VisualabPhoto"));
     } else {
-        assert_eq!(dir, root.join("home/.config/photocraft"));
+        assert_eq!(dir, root.join("home/.config/visualab-photo"));
     }
     let _ = std::fs::remove_dir_all(&root);
 }

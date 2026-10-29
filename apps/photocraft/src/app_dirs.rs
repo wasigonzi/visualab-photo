@@ -8,7 +8,7 @@
 //!    `%APPDATA%`. The Windows portable zip ships with `portable.txt`; the MSI doesn't. If that
 //!    folder can't be written (read-only medium, Program Files), the app warns and falls back.
 //! 3. The platform convention: macOS `~/Library/Application Support/VisualabPhoto`, Windows
-//!    `%APPDATA%\Photocraft`, Linux `$XDG_CONFIG_HOME/photocraft` or `~/.config/photocraft`.
+//!    `%APPDATA%\Photocraft`, Linux `$XDG_CONFIG_HOME/photocraft` or `~/.config/visualab-photo`.
 //!
 //! One exception: the platform convention keeps crash-recovery autosaves out of what is synced
 //! with the settings: the Windows roaming profile and the Linux config folder ([`recovery_dir`]).

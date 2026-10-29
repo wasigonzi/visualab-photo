@@ -128,7 +128,7 @@
         <RegistryValue Root="HKMU" Key="Software\Classes\Applications\photocraft.exe\SupportedTypes" Name=".avif" Value="" Type="string" />
         <RegistryValue Root="HKMU" Key="Software\Classes\Applications\photocraft.exe\SupportedTypes" Name=".qoi" Value="" Type="string" />
         <RegistryValue Root="HKMU" Key="Software\Classes\Applications\photocraft.exe\SupportedTypes" Name=".ico" Value="" Type="string" />
-        <RegistryValue Root="HKMU" Key="Software\Microsoft\Windows\CurrentVersion\App Paths\photocraft.exe" Value="[#PhotocraftExe]" Type="string" />
+        <RegistryValue Root="HKMU" Key="Software\Microsoft\Windows\CurrentVersion\App Paths\visualab-photo.exe" Value="[#PhotocraftExe]" Type="string" />
         <RegistryValue Root="HKMU" Key="Software\Visualab Photo" Name="InstallDir" Value="[INSTALLFOLDER]" Type="string" />
       </Component>
 
